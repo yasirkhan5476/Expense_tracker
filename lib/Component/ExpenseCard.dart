@@ -11,12 +11,13 @@ class ExpenseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate =
-        DateFormat('yyyy-MM-dd, hh:mm a').format(expense.createdAt);
+    final formattedDate = DateFormat('yyyy-MM-dd, hh:mm a')
+        .format(expense.createdAt);
 
     // "food" -> "Food"
     final categoryName =
-        expense.category.name[0].toUpperCase() + expense.category.name.substring(1);
+        expense.category.name[0].toUpperCase() +
+        expense.category.name.substring(1);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 13),
@@ -48,7 +49,7 @@ class ExpenseCard extends StatelessWidget {
                     "$categoryName · $formattedDate",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 13,
+                      fontSize: 10,
                       color: Appcolor.greyColor,
                     ),
                   ),
@@ -60,7 +61,7 @@ class ExpenseCard extends StatelessWidget {
             expense.expValue.toString(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontSize: 15,
               color: Appcolor.color0F1B2D,
             ),
           ),

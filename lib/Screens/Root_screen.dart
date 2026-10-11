@@ -1,3 +1,4 @@
+import 'package:expense_tracker/Screens/AddExpenses.dart';
 import 'package:expense_tracker/Screens/Dashboard.dart';
 import 'package:expense_tracker/Screens/Expenses.dart';
 import 'package:flutter/material.dart';
@@ -23,48 +24,70 @@ class _RootScreenState extends State<RootScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: IndexedStack(
-          index: _currentIndex,
-          children: _screens,
-        ),
+        child: IndexedStack(index: _currentIndex, children: _screens),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(top: BorderSide(color: Colors.grey.shade200, width: 1)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(icon: Icons.home_outlined, label: "Home", index: 0),
-            _buildNavItem(icon: Icons.format_list_bulleted_rounded, label: "Expenses", index: 1),
-            GestureDetector(
-              onTap: (){},
-              child: Container(
-                width: 48,
-                height: 48,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF017A54),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.add, color: Colors.white, size: 28),
-              ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              top: BorderSide(color: Colors.grey.shade200, width: 1),
             ),
-            _buildNavItem(icon: Icons.bar_chart_rounded, label: "Summary", index: 2),
-            _buildNavItem(icon: Icons.tune_rounded, label: "Settings", index: 3),
-          ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(icon: Icons.home_outlined, label: "Home", index: 0),
+              _buildNavItem(
+                icon: Icons.format_list_bulleted_rounded,
+                label: "Expenses",
+                index: 1,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddExpenses_screen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF017A54),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.add, color: Colors.white, size: 28),
+                ),
+              ),
+              _buildNavItem(
+                icon: Icons.bar_chart_rounded,
+                label: "Summary",
+                index: 2,
+              ),
+              _buildNavItem(
+                icon: Icons.tune_rounded,
+                label: "Settings",
+                index: 3,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildNavItem({required IconData icon,required String label,required int index,}) {
+  Widget _buildNavItem({
+    required IconData icon,
+    required String label,
+    required int index,
+  }) {
     final isActive = _currentIndex == index;
 
-    final color = isActive
-        ? const Color(0xFF017A54)
-        : Colors.grey.shade500;
+    final color = isActive ? const Color(0xFF017A54) : Colors.grey.shade500;
 
     return InkWell(
       onTap: () {
@@ -75,11 +98,7 @@ class _RootScreenState extends State<RootScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            color: color,
-            size: 22,
-          ),
+          Icon(icon, color: color, size: 22),
 
           const SizedBox(height: 4),
 
@@ -88,9 +107,7 @@ class _RootScreenState extends State<RootScreen> {
             style: TextStyle(
               color: color,
               fontSize: 11,
-              fontWeight: isActive
-                  ? FontWeight.bold
-                  : FontWeight.normal,
+              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             ),
           ),
         ],

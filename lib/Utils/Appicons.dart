@@ -1,4 +1,3 @@
-import 'package:expense_tracker/Utils/Appcolor.dart';
 import 'package:flutter/material.dart';
 
 class Appicons {

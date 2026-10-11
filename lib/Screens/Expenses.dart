@@ -76,11 +76,9 @@ class _Expenses_screenState extends State<Expenses_screen> {
       backgroundColor: const Color(0xFFF7F9FA),
       body: SafeArea(
         child: SingleChildScrollView(
+         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 24.0,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -191,7 +189,7 @@ class _Expenses_screenState extends State<Expenses_screen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 5),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -209,6 +207,7 @@ class _Expenses_screenState extends State<Expenses_screen> {
                     },
                   ),
                 ),
+                SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -230,7 +229,7 @@ class _Expenses_screenState extends State<Expenses_screen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 5),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,

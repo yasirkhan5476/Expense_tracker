@@ -1,4 +1,3 @@
-import 'package:expense_tracker/Screens/Dashboard.dart';
 import 'package:expense_tracker/Screens/Root_screen.dart';
 import 'package:expense_tracker/Screens/Splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,7 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: RootScreen(),
+      home: Splash_screen(),
     );
   }
 }
-
