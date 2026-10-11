@@ -1,4 +1,5 @@
 import 'package:expense_tracker/Screens/Dashboard.dart';
+import 'package:expense_tracker/Screens/Expenses.dart';
 import 'package:flutter/material.dart';
 
 class RootScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _RootScreenState extends State<RootScreen> {
 
   final List<Widget> _screens = [
     Dashboard(),
-    Center(child: Text('Expenses')),
+    Expenses_screen(),
     Center(child: Text('Reports')),
     Center(child: Text('Profile')),
   ];
