@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ExpenseModel {
   final String name;
   final ExpenseCategory category;
@@ -12,13 +14,16 @@ class ExpenseModel {
   });
 }
 
+class ExpenseCategory {
+  final String name;
+  final String label;
+  final Color color;
+  final bool isSelected;
 
-enum ExpenseCategory{
-  food,
-  transport,
-  health,
-  shopping,
-  bill,
-  fun
-
+  const ExpenseCategory({
+    required this.name,
+    required this.label,
+    required this.color,
+    this.isSelected=false
+  });
 }

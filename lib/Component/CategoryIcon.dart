@@ -11,17 +11,17 @@ class CategoryIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (color, icon) = switch (category) {
-      ExpenseCategory.food => (Appcolor.colorFFF1D6, Appicons.foodIcon),
-      ExpenseCategory.bill => (Appcolor.colorEADFFD, Appicons.billIcon),
-      ExpenseCategory.transport => (
-        Appcolor.colorDCEBFF,
-        Appicons.transportIcon,
-      ),
-      ExpenseCategory.shopping => (Appcolor.colorFCE1EE, Appicons.shoppingIcon),
-      ExpenseCategory.health => (Appcolor.colorFDE1DE, Appicons.healthIcon),
-      ExpenseCategory.fun => (Appcolor.colorDCF2E8, Appicons.funIcon),
-    };
+    // final (color, icon) = switch (category) {
+    //   ExpenseCategory.food => (Appcolor.colorFFF1D6, Appicons.foodIcon),
+    //   ExpenseCategory.bill => (Appcolor.colorEADFFD, Appicons.billIcon),
+    //   ExpenseCategory.transport => (
+    //     Appcolor.colorDCEBFF,
+    //     Appicons.transportIcon,
+    //   ),
+    //   ExpenseCategory.shopping => (Appcolor.colorFCE1EE, Appicons.shoppingIcon),
+    //   ExpenseCategory.health => (Appcolor.colorFDE1DE, Appicons.healthIcon),
+    //   ExpenseCategory.fun => (Appcolor.colorDCF2E8, Appicons.funIcon),
+    // };
 
     return Container(
       padding: const EdgeInsets.all(12),
@@ -29,9 +29,9 @@ class CategoryIcon extends StatelessWidget {
       height: 44,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: color,
+        color: category.color,
       ),
-      child: SvgPicture.asset(icon),
+      child: SvgPicture.asset(category.label),
     );
   }
 }

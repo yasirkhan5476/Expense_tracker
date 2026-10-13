@@ -1,6 +1,7 @@
 import 'package:expense_tracker/Component/ExpenseCard.dart';
 import 'package:expense_tracker/Models/expense_model.dart';
 import 'package:expense_tracker/Utils/Appcolor.dart';
+import 'package:expense_tracker/Utils/Appicons.dart';
 
 import 'package:flutter/material.dart';
 
@@ -15,25 +16,41 @@ class _DashboardState extends State<Dashboard> {
   List<ExpenseModel> expense_model = [
     ExpenseModel(
       name: "Biryani",
-      category: ExpenseCategory.food,
+      category: ExpenseCategory(
+        name: "food",
+        label: Appicons.foodIcon,
+        color: Appcolor.colorFFF1D6,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
     ExpenseModel(
       name: "KE bill",
-      category: ExpenseCategory.bill,
+      category: ExpenseCategory(
+        name: "bill",
+        label: Appicons.billIcon,
+        color: Appcolor.colorEADFFD,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
     ExpenseModel(
       name: "Car Fuel",
-      category: ExpenseCategory.transport,
+      category: ExpenseCategory(
+        name: "transport",
+        label: Appicons.transportIcon,
+        color: Appcolor.colorDCEBFF,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
     ExpenseModel(
       name: "CBC blood test",
-      category: ExpenseCategory.health,
+      category: ExpenseCategory(
+        name: "health",
+        label: Appicons.healthIcon,
+        color: Appcolor.colorFDE1DE,
+      ),
       createdAt: DateTime.now(),
       expValue: 800,
     ),
@@ -48,7 +65,8 @@ class _DashboardState extends State<Dashboard> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

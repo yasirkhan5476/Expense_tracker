@@ -27,13 +27,21 @@ class _Expenses_screenState extends State<Expenses_screen> {
   List<ExpenseModel> Today = [
     ExpenseModel(
       name: "Biryani lunch",
-      category: ExpenseCategory.food,
+      category: ExpenseCategory(
+        name: "food",
+        label: Appicons.foodIcon,
+        color: Appcolor.colorFFF1D6,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
     ExpenseModel(
       name: "Careem ride",
-      category: ExpenseCategory.transport,
+      category: ExpenseCategory(
+        name: "transport",
+        label: Appicons.transportIcon,
+        color: Appcolor.colorDCEBFF,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
@@ -41,13 +49,21 @@ class _Expenses_screenState extends State<Expenses_screen> {
   List<ExpenseModel> Yesterday = [
     ExpenseModel(
       name: "Pharmacy",
-      category: ExpenseCategory.health,
+      category: ExpenseCategory(
+        name: "health",
+        label: Appicons.healthIcon,
+        color: Appcolor.colorFDE1DE,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
     ExpenseModel(
       name: "Daraz Order",
-      category: ExpenseCategory.shopping,
+      category: ExpenseCategory(
+        name: "shopping",
+        label: Appicons.shoppingIcon,
+        color: Appcolor.colorFCE1EE,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
@@ -55,13 +71,21 @@ class _Expenses_screenState extends State<Expenses_screen> {
   List<ExpenseModel> Afternoon = [
     ExpenseModel(
       name: "KE bill",
-      category: ExpenseCategory.bill,
+      category: ExpenseCategory(
+        name: "bill",
+        label: Appicons.billIcon,
+        color: Appcolor.colorEADFFD,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
     ExpenseModel(
       name: "Cinema Tickets",
-      category: ExpenseCategory.fun,
+      category: ExpenseCategory(
+        name: "name",
+        label: Appicons.funIcon,
+        color: Appcolor.colorDCF2E8,
+      ),
       createdAt: DateTime.now(),
       expValue: 10,
     ),
@@ -76,7 +100,7 @@ class _Expenses_screenState extends State<Expenses_screen> {
       backgroundColor: const Color(0xFFF7F9FA),
       body: SafeArea(
         child: SingleChildScrollView(
-         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             child: Column(

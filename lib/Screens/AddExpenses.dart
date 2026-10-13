@@ -3,7 +3,6 @@ import 'package:expense_tracker/Utils/Appcolor.dart';
 import 'package:expense_tracker/Utils/Appicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart'; // Optional for formatting, or you can format manually below
 
 class AddExpenses_screen extends StatefulWidget {
   const AddExpenses_screen({super.key});
@@ -15,6 +14,9 @@ class AddExpenses_screen extends StatefulWidget {
 class _AddExpenses_screenState extends State<AddExpenses_screen> {
   DateTime selectedDate = DateTime.now();
   final TextEditingController noteController = TextEditingController();
+
+  // Track selected category index
+  int selectedCategoryIndex = 0;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -43,21 +45,11 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
     }
   }
 
-  // Simple helper to format date display (e.g., "12 Oct 2026")
+  // Fixed date formatting helper
   String _formatDate(DateTime date) {
     List<String> months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
     return "${date.day} ${months[date.month - 1]} ${date.year}";
   }
@@ -68,37 +60,184 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
     super.dispose();
   }
 
+  List<ExpenseModel> expense_model = [
+    ExpenseModel(
+      name: "Food",
+      category: ExpenseCategory(
+        name: "food",
+        label: Appicons.foodIcon,
+        color: Appcolor.colorFFF1D6,
+      ),
+      createdAt: DateTime.now(),
+      expValue: 10,
+    ),
+    ExpenseModel(
+      name: "Transport",
+      category: ExpenseCategory(
+        name: "transport",
+        label: Appicons.transportIcon,
+        color: Appcolor.colorDCEBFF,
+      ),
+      createdAt: DateTime.now(),
+      expValue: 10,
+    ),
+    ExpenseModel(
+      name: "Bills",
+      category: ExpenseCategory(
+        name: "bill",
+        label: Appicons.billIcon,
+        color: Appcolor.colorEADFFD,
+      ),
+      createdAt: DateTime.now(),
+      expValue: 10,
+    ),
+    ExpenseModel(
+      name: "Shopping",
+      category: ExpenseCategory(
+        name: "shopping",
+        label: Appicons.shoppingIcon,
+        color: Appcolor.colorFCE1EE,
+      ),
+      createdAt: DateTime.now(),
+      expValue: 10,
+    ),
+    ExpenseModel(
+      name: "Health",
+      category: ExpenseCategory(
+        name: "health",
+        label: Appicons.healthIcon,
+        color: Appcolor.colorFDE1DE,
+      ),
+      createdAt: DateTime.now(),
+      expValue: 800,
+    ),
+    ExpenseModel(
+      name: "Fun",
+      category: ExpenseCategory(
+        name: "fun",
+        label: Appicons.funIcon,
+        color: Appcolor.colorDCF2E8,
+      ),
+      createdAt: DateTime.now(),
+      expValue: 100,
+    ),
+  ];
+
   void ShowbottomSheet() {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          child: Container(
-            padding: EdgeInsets.all(12),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Choose category",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Choose category",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(Icons.close),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: GridView.builder(
+                      itemCount: expense_model.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 1.1, // Fixed aspect ratio instead of tiny mainAxisExtent
+                      ),
+                      itemBuilder: (context, index) {
+                        final item = expense_model[index];
+                        final isSelected = selectedCategoryIndex == index;
+                        return InkWell(
+                          onTap: () {
+                            setModalState(() {
+                              selectedCategoryIndex = index;
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Appcolor.purewhite,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: isSelected ? Appcolor.deepgreen : Appcolor.greyColor,
+                                width: 1,
+
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 28,
+                                  height: 28,
+                                  child: SvgPicture.asset(item.category.label),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  item.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  InkWell(
+                    onTap: () {
+                      setState(() {}); // Updates the main screen with the chosen category
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 48,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Appcolor.deepgreen,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        "Done",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(Icons.close),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
@@ -106,6 +245,8 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentCategory = expense_model[selectedCategoryIndex];
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -208,21 +349,21 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                                 Container(
                                   width: 30,
                                   height: 30,
-                                  padding: EdgeInsets.all(4),
+                                  padding: const EdgeInsets.all(4),
                                   decoration: BoxDecoration(
-                                    color: Appcolor.colorFFF1D6,
+                                    color: currentCategory.category.color,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: SvgPicture.asset(Appicons.foodIcon),
+                                  child: SvgPicture.asset(currentCategory.category.label),
                                 ),
                                 const SizedBox(width: 12),
-                                const Text(
-                                  "Food",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Text(
+                                  currentCategory.name,
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                            Icon(Icons.chevron_right),
+                            const Icon(Icons.chevron_right),
                           ],
                         ),
                       ),
@@ -278,7 +419,7 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                               textAlign: TextAlign.end,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Add note",
+                                hintText: "Lunch with Hamza",
                                 isDense: true,
                               ),
                               style: const TextStyle(
