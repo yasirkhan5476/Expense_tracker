@@ -6,7 +6,7 @@ class ExpenseModel {
   final DateTime createdAt;
   final double expValue;
 
-  const ExpenseModel({
+  ExpenseModel({
     required this.name,
     required this.category,
     required this.createdAt,
@@ -18,12 +18,10 @@ class ExpenseCategory {
   final String name;
   final String label;
   final Color color;
-  final bool isSelected;
 
-  const ExpenseCategory({
+  ExpenseCategory({
     required this.name,
     required this.label,
     required this.color,
-    this.isSelected=false
   });
 }

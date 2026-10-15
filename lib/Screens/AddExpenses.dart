@@ -1,3 +1,4 @@
+import 'package:expense_tracker/Component/Addcategorycomponent.dart';
 import 'package:expense_tracker/Models/expense_model.dart';
 import 'package:expense_tracker/Utils/Appcolor.dart';
 import 'package:expense_tracker/Utils/Appicons.dart';
@@ -48,8 +49,18 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
   // Fixed date formatting helper
   String _formatDate(DateTime date) {
     List<String> months = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
     ];
     return "${date.day} ${months[date.month - 1]} ${date.year}";
   }
@@ -60,68 +71,68 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
     super.dispose();
   }
 
-  List<ExpenseModel> expense_model = [
-    ExpenseModel(
-      name: "Food",
-      category: ExpenseCategory(
-        name: "food",
-        label: Appicons.foodIcon,
-        color: Appcolor.colorFFF1D6,
-      ),
-      createdAt: DateTime.now(),
-      expValue: 10,
-    ),
-    ExpenseModel(
-      name: "Transport",
-      category: ExpenseCategory(
-        name: "transport",
-        label: Appicons.transportIcon,
-        color: Appcolor.colorDCEBFF,
-      ),
-      createdAt: DateTime.now(),
-      expValue: 10,
-    ),
-    ExpenseModel(
-      name: "Bills",
-      category: ExpenseCategory(
-        name: "bill",
-        label: Appicons.billIcon,
-        color: Appcolor.colorEADFFD,
-      ),
-      createdAt: DateTime.now(),
-      expValue: 10,
-    ),
-    ExpenseModel(
-      name: "Shopping",
-      category: ExpenseCategory(
-        name: "shopping",
-        label: Appicons.shoppingIcon,
-        color: Appcolor.colorFCE1EE,
-      ),
-      createdAt: DateTime.now(),
-      expValue: 10,
-    ),
-    ExpenseModel(
-      name: "Health",
-      category: ExpenseCategory(
-        name: "health",
-        label: Appicons.healthIcon,
-        color: Appcolor.colorFDE1DE,
-      ),
-      createdAt: DateTime.now(),
-      expValue: 800,
-    ),
-    ExpenseModel(
-      name: "Fun",
-      category: ExpenseCategory(
-        name: "fun",
-        label: Appicons.funIcon,
-        color: Appcolor.colorDCF2E8,
-      ),
-      createdAt: DateTime.now(),
-      expValue: 100,
-    ),
-  ];
+  // List<ExpenseModel> expense_model = [
+  //   ExpenseModel(
+  //     name: "Food",
+  //     category: ExpenseCategory(
+  //       name: "food",
+  //       label: Appicons.foodIcon,
+  //       color: Appcolor.colorFFF1D6,
+  //     ),
+  //     createdAt: DateTime.now(),
+  //     expValue: 10,
+  //   ),
+  //   ExpenseModel(
+  //     name: "Transport",
+  //     category: ExpenseCategory(
+  //       name: "transport",
+  //       label: Appicons.transportIcon,
+  //       color: Appcolor.colorDCEBFF,
+  //     ),
+  //     createdAt: DateTime.now(),
+  //     expValue: 10,
+  //   ),
+  //   ExpenseModel(
+  //     name: "Bills",
+  //     category: ExpenseCategory(
+  //       name: "bill",
+  //       label: Appicons.billIcon,
+  //       color: Appcolor.colorEADFFD,
+  //     ),
+  //     createdAt: DateTime.now(),
+  //     expValue: 10,
+  //   ),
+  //   ExpenseModel(
+  //     name: "Shopping",
+  //     category: ExpenseCategory(
+  //       name: "shopping",
+  //       label: Appicons.shoppingIcon,
+  //       color: Appcolor.colorFCE1EE,
+  //     ),
+  //     createdAt: DateTime.now(),
+  //     expValue: 10,
+  //   ),
+  //   ExpenseModel(
+  //     name: "Health",
+  //     category: ExpenseCategory(
+  //       name: "health",
+  //       label: Appicons.healthIcon,
+  //       color: Appcolor.colorFDE1DE,
+  //     ),
+  //     createdAt: DateTime.now(),
+  //     expValue: 800,
+  //   ),
+  //   ExpenseModel(
+  //     name: "Fun",
+  //     category: ExpenseCategory(
+  //       name: "fun",
+  //       label: Appicons.funIcon,
+  //       color: Appcolor.colorDCF2E8,
+  //     ),
+  //     createdAt: DateTime.now(),
+  //     expValue: 100,
+  //   ),
+  // ];
 
   void ShowbottomSheet() {
     showModalBottomSheet(
@@ -161,15 +172,16 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                   const SizedBox(height: 16),
                   Expanded(
                     child: GridView.builder(
-                      itemCount: expense_model.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 1.1, // Fixed aspect ratio instead of tiny mainAxisExtent
-                      ),
+                      itemCount: Addexpensecategory.categories.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 1.1, // Fixed aspect ratio instead of tiny mainAxisExtent
+                          ),
                       itemBuilder: (context, index) {
-                        final item = expense_model[index];
+                        final item = Addexpensecategory.categories[index];
                         final isSelected = selectedCategoryIndex == index;
                         return InkWell(
                           onTap: () {
@@ -180,11 +192,12 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: Appcolor.purewhite,
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: isSelected ? Appcolor.deepgreen : Appcolor.greyColor,
+                                color: isSelected
+                                    ? Appcolor.deepgreen
+                                    : Appcolor.greyColor,
                                 width: 1,
-
                               ),
                             ),
                             child: Column(
@@ -193,7 +206,7 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                                 SizedBox(
                                   width: 28,
                                   height: 28,
-                                  child: SvgPicture.asset(item.category.label),
+                                  child: SvgPicture.asset(item.label),
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
@@ -213,7 +226,9 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                   const SizedBox(height: 16),
                   InkWell(
                     onTap: () {
-                      setState(() {}); // Updates the main screen with the chosen category
+                      setState(
+                        () {},
+                      ); // Updates the main screen with the chosen category
                       Navigator.pop(context);
                     },
                     child: Container(
@@ -245,7 +260,8 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
 
   @override
   Widget build(BuildContext context) {
-    final currentCategory = expense_model[selectedCategoryIndex];
+    final currentCategory =
+        Addexpensecategory.categories[selectedCategoryIndex];
 
     return Scaffold(
       appBar: AppBar(
@@ -351,15 +367,19 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                                   height: 30,
                                   padding: const EdgeInsets.all(4),
                                   decoration: BoxDecoration(
-                                    color: currentCategory.category.color,
+                                    color: currentCategory.color,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: SvgPicture.asset(currentCategory.category.label),
+                                  child: SvgPicture.asset(
+                                    currentCategory.label,
+                                  ),
                                 ),
                                 const SizedBox(width: 12),
                                 Text(
                                   currentCategory.name,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),

@@ -1,3 +1,4 @@
+import 'package:expense_tracker/Component/Addcategorycomponent.dart';
 import 'package:expense_tracker/Component/ExpenseCard.dart';
 import 'package:expense_tracker/Models/expense_model.dart';
 import 'package:expense_tracker/Utils/Appcolor.dart';
@@ -15,15 +16,16 @@ class Expenses_screen extends StatefulWidget {
 
 class _Expenses_screenState extends State<Expenses_screen> {
   // List of categories matching your wireframe design
-  final List<String> categories = [
-    "All",
-    "Food",
-    "Transport",
-    "Bills",
-    "Shopping",
-    "Health",
-    "Fun",
-  ];
+  // final List<String> categories = [
+  //   "All",
+  //   "Food",
+  //   "Transport",
+  //   "Bills",
+  //   "Shopping",
+  //   "Health",
+  //   "Fun",
+  // ];
+
   List<ExpenseModel> Today = [
     ExpenseModel(
       name: "Biryani lunch",
@@ -96,6 +98,19 @@ class _Expenses_screenState extends State<Expenses_screen> {
 
   @override
   Widget build(BuildContext context) {
+    List<ExpenseCategory> displayCategories = List.from(
+      Addexpensecategory.categories,
+    );
+
+    // 2. Manually insert "All" at index 0 ONLY for this screen
+    displayCategories.insert(
+      0,
+      ExpenseCategory(
+        name: "All",
+        label: Appicons.searchIcon,
+        color: Colors.white,
+      ),
+    );
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FA),
       body: SafeArea(
@@ -123,7 +138,7 @@ class _Expenses_screenState extends State<Expenses_screen> {
                   height: 42,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
+                    itemCount: displayCategories.length,
                     itemBuilder: (context, index) {
                       final isSelected = selectedCategoryIndex == index;
                       return Padding(
@@ -153,7 +168,7 @@ class _Expenses_screenState extends State<Expenses_screen> {
                               ),
                             ),
                             child: Text(
-                              categories[index],
+                              Addexpensecategory.categories[index].name,
                               style: TextStyle(
                                 color: isSelected
                                     ? Appcolor.purewhite
