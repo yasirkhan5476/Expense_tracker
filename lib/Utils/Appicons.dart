@@ -12,4 +12,9 @@ class Appicons {
   static final String funIcon = "assets/fun_icon.svg";
   static final String searchIcon = "assets/search.svg";
   static final search_icon2 = Image.asset("assets/search.png");
+  static final String chevronRightIcon = "assets/chevron_right_icon.svg";
+  static final String downloadIcon = "assets/download_icon.svg";
+  static final String logoutIcon = "assets/logout_icon.svg";
+  static final String deleteIcon = "assets/delete_icon.svg";
+
 }

@@ -72,9 +72,7 @@ class _Signup_screenState extends State<Signup_screen> {
                                 child: Appicons.Back_arrow_icon,
                               ),
                             ),
-
                             const SizedBox(height: 24),
-
                             // 2. Heading & Subtitle
                             const Text(
                               "Create your account",

@@ -1,6 +1,7 @@
 import 'package:expense_tracker/Screens/AddExpenses.dart';
 import 'package:expense_tracker/Screens/Dashboard.dart';
 import 'package:expense_tracker/Screens/Expenses.dart';
+import 'package:expense_tracker/Screens/Settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class RootScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _RootScreenState extends State<RootScreen> {
     Dashboard(),
     Expenses_screen(),
     Center(child: Text('Reports')),
-    Center(child: Text('Profile')),
+    SettingScreen()
   ];
 
   @override

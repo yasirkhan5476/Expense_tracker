@@ -21,4 +21,7 @@ class Appcolor {
   static final Color colorD5F3EF = Color(0xffD5F3EF);
   static final Color colorF4F6F8 = Color(0xffF4F6F8);
   static final Color colorEEF1F4 = Color(0xffEEF1F4);
+  static final Color redColor = Colors.red;
+  static final Color greenColor = Color(0xff0B7A5A);
+  static final Color color9AA5B5 = Color(0xff9AA5B5);
 }
