@@ -1,9 +1,11 @@
 import 'package:expense_tracker/Screens/Root_screen.dart';
 import 'package:expense_tracker/Screens/Splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+Future<void> main()async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 

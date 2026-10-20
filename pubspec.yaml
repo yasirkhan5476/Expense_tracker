@@ -37,6 +37,8 @@ dependencies:
   google_fonts: ^6.1.0
   flutter_svg: ^2.3.0
   intl: ^0.20.3
+  get_storage: ^2.1.1
+  localstorage: ^6.0.0
 
 dev_dependencies:
   flutter_test:
