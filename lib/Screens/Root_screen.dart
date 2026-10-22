@@ -14,18 +14,19 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    Dashboard(),
-    Expenses_screen(),
-    Center(child: Text('Reports')),
-    SettingScreen()
-  ];
-
   @override
   Widget build(BuildContext context) {
+    // 👈 Move _screens inside the build method so it recreates instances on setState()
+    final List<Widget> screens = [
+      const Dashboard(),
+      const Expenses_screen(),
+      const Center(child: Text('Reports')),
+      const SettingScreen(),
+    ];
+
     return Scaffold(
       body: SafeArea(
-        child: IndexedStack(index: _currentIndex, children: _screens),
+        child: IndexedStack(index: _currentIndex, children: screens),
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
@@ -45,25 +46,7 @@ class _RootScreenState extends State<RootScreen> {
                 label: "Expenses",
                 index: 1,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddExpenses_screen(),
-                    ),
-                  );
-                },
-                child: Container(
-                  width: 48,
-                  height: 48,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF017A54),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.add, color: Colors.white, size: 28),
-                ),
-              ),
+
               _buildNavItem(
                 icon: Icons.bar_chart_rounded,
                 label: "Summary",
@@ -87,7 +70,6 @@ class _RootScreenState extends State<RootScreen> {
     required int index,
   }) {
     final isActive = _currentIndex == index;
-
     final color = isActive ? const Color(0xFF017A54) : Colors.grey.shade500;
 
     return InkWell(
@@ -100,9 +82,7 @@ class _RootScreenState extends State<RootScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: color, size: 22),
-
           const SizedBox(height: 4),
-
           Text(
             label,
             style: TextStyle(

@@ -1,10 +1,10 @@
 import 'package:expense_tracker/Component/ExpenseCard.dart';
 import 'package:expense_tracker/Models/expense_model.dart';
+import 'package:expense_tracker/Screens/AddExpenses.dart';
+import 'package:expense_tracker/Screens/EditExpense.dart';
 import 'package:expense_tracker/Services/Global.dart';
 import 'package:expense_tracker/Utils/Appcolor.dart';
 import 'package:expense_tracker/Utils/Appicons.dart';
-// Import your global file where listofExpenses and saveExpenses are declared:
-// import 'path_to_your_global_file.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,9 +16,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  // 👈 Removed local hardcoded list and using global `listofExpenses` instead
 
-  // Example helper function if you want to add a new expense and persist it instantly:
   void _addNewExpenseSample() {
     setState(() {
       listofExpenses.add(
@@ -195,7 +193,13 @@ class _DashboardState extends State<Dashboard> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: listofExpenses.length, // 👈 Uses global persistent list length
                         itemBuilder: (context, index) {
-                          return ExpenseCard(expense: listofExpenses[index]); // 👈 Uses global persistent item
+                          return InkWell(onTap:() async{
+                            final result = await Navigator.push(context, MaterialPageRoute(builder: (context)=>Editexpense(expenseToEdit: listofExpenses[index],)));
+                            if(result==true){
+                              setState(() {});
+                            }
+                          },
+                              child: ExpenseCard(expense: listofExpenses[index])); // 👈 Uses global persistent item
                         },
                         separatorBuilder: (context, index) {
                           return _buildDivider();
@@ -209,6 +213,22 @@ class _DashboardState extends State<Dashboard> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () async{
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AddExpenses_screen(),
+          ),
+        );
+        if (result == true) {
+          setState(() {});
+        }
+      },
+        backgroundColor:Appcolor.deepgreen,
+        shape:RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+         ),
+        elevation: 4,child:  const Icon(Icons.add, color: Colors.white, size: 28),),
     );
   }
 

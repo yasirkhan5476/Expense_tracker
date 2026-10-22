@@ -1,5 +1,6 @@
 import 'package:expense_tracker/Component/Addcategorycomponent.dart';
 import 'package:expense_tracker/Models/expense_model.dart';
+import 'package:expense_tracker/Services/Global.dart';
 import 'package:expense_tracker/Utils/Appcolor.dart';
 import 'package:expense_tracker/Utils/Appicons.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,31 @@ class AddExpenses_screen extends StatefulWidget {
 class _AddExpenses_screenState extends State<AddExpenses_screen> {
   DateTime selectedDate = DateTime.now();
   final TextEditingController noteController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
 
   // Track selected category index
   int selectedCategoryIndex = 0;
+  void _saveExpenses(){
+    double value = double.tryParse(amountController.text.trim())??0.0;
+    if(value<=0){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please nert the valid amount")));
+      return;
+    }
+    final finalcategory = Addexpensecategory.categories[selectedCategoryIndex];
+    final newExpenses = ExpenseModel(
+        name: noteController.text.trim().isEmpty ? finalcategory.name:noteController.text.trim(),
+        category: ExpenseCategory(name: finalcategory.name,
+            label: finalcategory.label, color: finalcategory.color),
+        createdAt: selectedDate,
+        expValue: value);
+    setState(() {
+      listofExpenses.insert(0, newExpenses);
+    });
+    saveExpenses();
+    print("Total expenses after adding: ${listofExpenses.length}");
+    Navigator.pop(context,true);
+  }
+
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -149,107 +172,109 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Choose category",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(Icons.close),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: GridView.builder(
-                      itemCount: Addexpensecategory.categories.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 1.1, // Fixed aspect ratio instead of tiny mainAxisExtent
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Choose category",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
-                      itemBuilder: (context, index) {
-                        final item = Addexpensecategory.categories[index];
-                        final isSelected = selectedCategoryIndex == index;
-                        return InkWell(
+                        ),
+                        InkWell(
                           onTap: () {
-                            setModalState(() {
-                              selectedCategoryIndex = index;
-                            });
+                            Navigator.pop(context);
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Appcolor.purewhite,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: isSelected
-                                    ? Appcolor.deepgreen
-                                    : Appcolor.greyColor,
-                                width: 1,
+                          child: const Icon(Icons.close),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: GridView.builder(
+                        itemCount: Addexpensecategory.categories.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 1.1, // Fixed aspect ratio instead of tiny mainAxisExtent
+                            ),
+                        itemBuilder: (context, index) {
+                          final item = Addexpensecategory.categories[index];
+                          final isSelected = selectedCategoryIndex == index;
+                          return InkWell(
+                            onTap: () {
+                              setModalState(() {
+                                selectedCategoryIndex = index;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Appcolor.purewhite,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? Appcolor.deepgreen
+                                      : Appcolor.greyColor,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 28,
+                                    height: 28,
+                                    child: SvgPicture.asset(item.label),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    item.name,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 28,
-                                  height: 28,
-                                  child: SvgPicture.asset(item.label),
-                                ),
-                                const SizedBox(height: 6),
-                                Text(
-                                  item.name,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  InkWell(
-                    onTap: () {
-                      setState(
-                        () {},
-                      ); // Updates the main screen with the chosen category
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 48,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Appcolor.deepgreen,
-                        borderRadius: BorderRadius.circular(12),
+                          );
+                        },
                       ),
-                      child: const Text(
-                        "Done",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                    ),
+                    const SizedBox(height: 16),
+                    InkWell(
+                      onTap: () {
+                        setState(
+                          () {},
+                        ); // Updates the main screen with the chosen category
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 48,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Appcolor.deepgreen,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Text(
+                          "Done",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
@@ -290,41 +315,47 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Amount Input Container
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
-                    vertical: 20,
+                    vertical: 16,
                     horizontal: 16,
                   ),
                   decoration: BoxDecoration(
                     color: Appcolor.colorF4F6F8,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: const [
-                          Text(
-                            "Rs ",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
+                      const Text(
+                        "Rs    ",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 160,
+                        child: TextField(
+                          controller: amountController,
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
-                          Text(
-                            "1250",
-                            style: TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "1250",
+                            isDense: true,
+                            contentPadding: EdgeInsets.zero,
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
@@ -452,6 +483,29 @@ class _AddExpenses_screenState extends State<AddExpenses_screen> {
                           const SizedBox(width: 8),
                           const Icon(Icons.chevron_right, color: Colors.grey),
                         ],
+                      ),
+                      const SizedBox(height: 30),
+
+
+                      InkWell(
+                        onTap: _saveExpenses,
+                        child: Container(
+                          width: double.infinity,
+                          height: 52,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Appcolor.deepgreen,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: const Text(
+                            "Add Expense",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

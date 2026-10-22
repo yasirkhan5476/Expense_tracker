@@ -1,6 +1,7 @@
 import 'package:expense_tracker/Component/MyTextfieldcomponent.dart';
 import 'package:expense_tracker/Component/MybuttonComponent.dart';
 import 'package:expense_tracker/Screens/Auth/Login_screen.dart';
+import 'package:expense_tracker/Services/Auth_services.dart';
 import 'package:expense_tracker/Utils/Appcolor.dart';
 import 'package:expense_tracker/Utils/Appicons.dart';
 import 'package:flutter/material.dart';
@@ -194,7 +195,7 @@ class _Signup_screenState extends State<Signup_screen> {
                             Mybuttoncomponent(
                               text: "Create account",
                               onTap: () {
-                                // TODO: Handle Sign up logic
+                               Auth_services().Signupwithemailandpassowrd(emailAddress: emailController.text, password: passwordController.text);
                               },
                             ),
                           ],
