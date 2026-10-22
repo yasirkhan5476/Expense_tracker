@@ -168,7 +168,7 @@ class _Expenses_screenState extends State<Expenses_screen> {
                               ),
                             ),
                             child: Text(
-                              Addexpensecategory.categories[index].name,
+                              displayCategories[index].name,
                               style: TextStyle(
                                 color: isSelected
                                     ? Appcolor.purewhite
